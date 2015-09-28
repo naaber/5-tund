@@ -57,6 +57,9 @@
 		return $data;
 	}
 	
+	//küsime tabeli kujul andmed
+	getAllData();
+	
 ?>
 
 Tere, <?=$_SESSION["logged_in_user_email"];?> <a href="?logout=1">Logi välja</a>
