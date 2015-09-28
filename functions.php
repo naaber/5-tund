@@ -42,13 +42,37 @@
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password ) VALUES (?,?)");
+		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
 		$stmt->bind_param ("ss", $create_email, $hash);
 		$stmt->execute();
 		$stmt->close();
 		
 		$mysqli->close();
 
+	}
+	
+	function createCarPlate($plate, $color){
+		
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+		
+		$stmt = $mysqli ->prepare("INSERT INTO car_plates (user_id, number_plate, color) VALUES (?,?,?)");
+		// i - user_id INT
+		$stmt->bind_param ("iss",$_SESSION["logged_in_user_id"], $plate, $color);
+		
+		$message ="";
+		
+		// kui õnnestub, siis tõene, kui viga, siis else
+		if($stmt->execute()){
+			//õnnestus
+			$message = "Edukalt andmebaasi salvestatud!";
+		}
+		
+		$stmt->close();
+		$mysqli->close();
+		
+		//saadan sõnumi tagasi
+		return $message;
+		
 	}
 
 ?>
